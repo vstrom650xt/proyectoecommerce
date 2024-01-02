@@ -46,7 +46,7 @@ class Login extends StatelessWidget {
               SizedBox(height: screenHeight * 0.02),
               Center(
                 child: Image.asset(
-                  "/home/jcerveram/flutterProjects/proyectoecommerce/lib/img/welcome.png",
+                  "lib/img/welcome.png",
                   height: screenHeight * 0.4,
                   width: screenWidth * 0.4,
                 ),
@@ -70,7 +70,7 @@ class Login extends StatelessWidget {
                     onPressed: () {},
                     padding: EdgeInsets.zero,
                     child: Image.asset(
-                      "/home/jcerveram/flutterProjects/proyectoecommerce/lib/img/google-removebg-preview.png",
+                      "lib/img/google-removebg-preview.png",
                       height: googleImageSize,
                     ),
                   ),
@@ -90,7 +90,7 @@ class Login extends StatelessWidget {
                       child: Text(
                         'Login',
                         style: TextStyle(
-                          fontSize: screenHeight * 0.03,                                    
+                          fontSize: screenHeight * 0.03,
                           color: Colors.white,
                         ),
                       ),

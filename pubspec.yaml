@@ -30,3 +30,5 @@ flutter:
   assets:
     - lib/img/welcome.png
     - lib/img/google-removebg-preview.png
+    - lib/img/image.png
+    - lib/img/login.png

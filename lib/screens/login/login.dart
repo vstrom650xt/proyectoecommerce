@@ -1,124 +1,88 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:proyectoecommerce/screens/signup/signup.dart';
+import 'package:proyectoecommerce/screens/welcome/welcomen.dart';
+import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key});
+class login extends StatelessWidget {
+  const login({super.key});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double iconSize = screenWidth * 0.1;
-    double googleImageSize = screenHeight * 0.1;
-    return Container(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Container(
+        child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: kToolbarHeight + 2,
+              Image.asset(
+                "lib/img/login.png",
+                height: screenHeight * 0.4,
+                width: screenWidth * 0.4,
               ),
-              Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  gradient: LinearGradient(
-                    colors: [Colors.blue, Color.fromARGB(255, 94, 32, 209)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Text(
-                    "Bienvenido",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.03,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: '',
-                      color: Colors.white,
-                    ),
-                  ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * 0.25, vertical: size.width * 0.03),
+                child: TextField(
+                  style: const TextStyle(color: Colors.white),
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'email',
+                      labelStyle: TextStyle(
+                          color: Color(0xFFBEBCBC),
+                          fontWeight: FontWeight.w700)),
+                  onChanged: (value) {},
                 ),
               ),
-              SizedBox(height: screenHeight * 0.02),
-              Center(
-                child: Image.asset(
-                  "lib/img/welcome.png",
-                  height: screenHeight * 0.4,
-                  width: screenWidth * 0.4,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.25),
+                child: TextField(
+                  keyboardType: TextInputType.visiblePassword,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'contraseña',
+                      labelStyle: TextStyle(
+                          color: Color(0xFFBEBCBC),
+                          fontWeight: FontWeight.w700)),
+                  onChanged: (value) {},
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: Icon(
-                      Icons.facebook,
-                      color: Colors.blue,
-                      size: screenHeight * 0.1,
-                    ),
+              Padding(
+                padding: EdgeInsets.all(54.0),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BotonEstilo(
+                          screenWidth: screenWidth / 1.5,
+                          screenHeight: screenHeight,
+                          text: "Iniciar",
+                          onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => login()),
+                                )
+                              }),
+                      const SizedBox(width: 10.0),
+                      BotonEstilo(
+                          screenWidth: screenWidth / 1.5,
+                          screenHeight: screenHeight,
+                          text: "Volver",
+                          onPressed: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => welcomen()),
+                                )
+                              })
+                    ],
                   ),
-                  SizedBox(
-                    width: screenWidth * 0.02,
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: Image.asset(
-                      "lib/img/google-removebg-preview.png",
-                      height: googleImageSize,
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: screenHeight * 0.05),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        fixedSize: Size(screenWidth * 0.2, screenHeight * 0.06),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.03,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: screenHeight * 0.03),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        fixedSize: Size(screenWidth * 0.2, screenHeight * 0.06),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Signup()),
-                        );
-                      },
-                      child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontSize: screenHeight * 0.03,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
-              // Footer
             ],
           ),
         ),

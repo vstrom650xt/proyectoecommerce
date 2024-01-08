@@ -5,11 +5,24 @@ class Auth {
   User? get currentUser => _auth.currentUser;
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  Future<void> signInWithEmailAndPassword({
+  static Future<User?> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Devuelve el usuario autenticado desde UserCredential
+      return userCredential.user;
+    } catch (e) {
+      // Manejo de errores, puedes imprimir el error si es necesario
+      print('Error al iniciar sesión: $e');
+      return null; // Retorna null en caso de error
+    }
   }
 
   static Future<User?> createUserWithEmailAndPassword({

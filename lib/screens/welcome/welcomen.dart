@@ -102,7 +102,7 @@ class welcomen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => login()),
+                                    builder: (context) => Login()),
                               )
                             }),
                     SizedBox(height: screenHeight * 0.03),
@@ -114,7 +114,7 @@ class welcomen extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => signup()),
+                                    builder: (context) => Signup()),
                               )
                             }),
                   ],

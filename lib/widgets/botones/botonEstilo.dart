@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class BotonEstilo extends StatelessWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String text;
+  final VoidCallback onPressed;
   const BotonEstilo({
     Key? key,
     required this.screenWidth,
@@ -8,11 +12,6 @@ class BotonEstilo extends StatelessWidget {
     required this.text,
     required this.onPressed,
   }) : super(key: key);
-
-  final double screenWidth;
-  final double screenHeight;
-  final String text;
-  final VoidCallback onPressed;
 
   final LinearGradient buttonGradient = const LinearGradient(
     colors: [Colors.blueAccent, Color.fromARGB(255, 94, 32, 209)],

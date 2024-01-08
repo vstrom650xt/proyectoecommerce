@@ -1,10 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectoecommerce/auth.dart';
 import 'package:proyectoecommerce/screens/home/home.dart';
 import 'package:proyectoecommerce/screens/welcome/welcomen.dart';
 import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+const List<String> scopes = <String>[
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];
 
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: 'your-client_id.apps.googleusercontent.com',
+  scopes: scopes,
+);
 class Login extends StatelessWidget {
   const Login({Key? key});
 
@@ -14,6 +26,10 @@ class Login extends StatelessWidget {
     String password = '';
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    double googleImageSize = screenHeight * 0.1;
+    ValueNotifier userCredential = ValueNotifier('');
+
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -60,6 +76,38 @@ class Login extends StatelessWidget {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CupertinoButton(
+                      onPressed: () {},
+                      padding: EdgeInsets.zero,
+                      child: Icon(
+                        Icons.facebook,
+                        color: Colors.blue,
+                        size: screenHeight * 0.1,
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth * 0.02,
+                    ),
+                    CupertinoButton(
+                      onPressed: () async {
+                        userCredential.value = await Auth.signInWithGoogle();
+                        if (userCredential.value != null)
+                          print(userCredential.value.user!.email);
+                      },
+                      padding: EdgeInsets.zero,
+                      child: Image.asset(
+                        "lib/img/google-removebg-preview.png",
+                        height: googleImageSize,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.all(54.0),
                 child: Center(
                   child: Row(
@@ -83,6 +131,7 @@ class Login extends StatelessWidget {
 
                               if (user != null) {
                                 // El inicio de sesión fue exitoso
+                                // ignore: use_build_context_synchronously
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

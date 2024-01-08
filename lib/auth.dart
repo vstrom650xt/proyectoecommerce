@@ -1,5 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+const List<String> scopes = <String>[
+  'email',
+  'https://www.googleapis.com/auth/contacts.readonly',
+];
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? get currentUser => _auth.currentUser;
@@ -34,15 +40,49 @@ class Auth {
     await auth.createUserWithEmailAndPassword(email: email, password: password);
   }
 
-  //   Future<void> createUserWithEmailAndPassword({
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   await _auth.createUserWithEmailAndPassword(
-  //       email: email, password: password);
-  // }
+ static Future<dynamic> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      // TODO
+      print('exception->$e');
+    }
+  }
+
+
+
+static Future<UserCredential> signInWithFacebook() async {
+  // Trigger the sign-in flow
+  final LoginResult loginResult = await FacebookAuth.instance.login();
+
+  // Create a credential from the access token
+  final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+  // Once signed in, return the UserCredential
+  return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+}
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectoecommerce/screens/login/login.dart';
 import 'package:proyectoecommerce/screens/signup/signup.dart';
 import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
+import 'package:proyectoecommerce/auth.dart';
 
 class welcomen extends StatelessWidget {
   const welcomen({Key? key});
@@ -13,6 +14,7 @@ class welcomen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double iconSize = screenWidth * 0.1;
     double googleImageSize = screenHeight * 0.1;
+    
 
     return Container(
       child: Scaffold(
@@ -63,31 +65,6 @@ class welcomen extends StatelessWidget {
                   height: screenHeight * 0.4,
                   width: screenWidth * 0.8,
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: Icon(
-                      Icons.facebook,
-                      color: Colors.blue,
-                      size: screenHeight * 0.1,
-                    ),
-                  ),
-                  SizedBox(
-                    width: screenWidth * 0.02,
-                  ),
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: Image.asset(
-                      "lib/img/google-removebg-preview.png",
-                      height: googleImageSize,
-                    ),
-                  ),
-                ],
               ),
               Center(
                 child: Column(

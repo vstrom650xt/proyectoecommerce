@@ -110,7 +110,10 @@ class Signup extends StatelessWidget {
                             email: email,
                             password: password,
                           );
-                          dialogo(text: "ya va ");
+                          const dialogo(
+                            textInferior: "ya va ",
+                            textoSuperior: "es el superior????",
+                          );
                           // showDialog(
                           //   context: context,
                           //   builder: (BuildContext context) {

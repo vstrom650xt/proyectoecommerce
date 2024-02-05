@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
-class top_titles extends StatelessWidget {
-  const top_titles({super.key});
+class TopTitles extends StatelessWidget {
+  final String subtitle;
+  final String title;
+
+  const TopTitles({Key? key, required this.subtitle, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Column(
+      children: [
+        Text('Title: $title'),
+        Text('Subtitle: $subtitle'),
+      ],
+    );
   }
 }

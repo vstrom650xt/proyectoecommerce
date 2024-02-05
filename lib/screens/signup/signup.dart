@@ -4,6 +4,7 @@ import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proyectoecommerce/auth.dart';
 import 'package:proyectoecommerce/widgets/show_dialog/dialogo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Signup extends StatelessWidget {
   const Signup({Key? key});
@@ -102,61 +103,61 @@ class Signup extends StatelessWidget {
                       onPressed: () async {
                         print('Email value: $email');
                         print('contra value: $password');
-
-                        // Check if password and confirmPassword match
-                        if (password == confirmPassword) {
-                          // Call Auth.createUserWithEmailAndPassword with the email and password values
-                          await Auth.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password,
-                          );
-                          const dialogo(
-                            textInferior: "ya va ",
-                            textoSuperior: "es el superior????",
-                          );
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return AlertDialog(
-                          //       title: const Text('Registrado correctamente'),
-                          //       content: const Text(
-                          //           'Las Registrado correctamente no coinciden'),
-                          //       actions: [
-                          //         TextButton(
-                          //           onPressed: () => {
-                          //             Navigator.push(
-                          //               context,
-                          //               MaterialPageRoute(
-                          //                   builder: (context) => welcomen()),
-                          //             )
-                          //           },
-                          //           child: const Text('Cerrar'),
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // );
-                        } else {
-                          // Passwords do not match, show a dialog
+                        if (password.length < 6) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Error'),
-                                content:
-                                    const Text('Las contraseñas no coinciden'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // Cierra el cuadro de diálogo
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cerrar'),
-                                  ),
-                                ],
+                              return dialogo(
+                                textoSuperior: "Error",
+                                textInferior:
+                                    "La contraseña debe tener al menos 6 caracteres",
                               );
                             },
                           );
+                        } else {
+                          try {
+                            List<String> signInMethods =
+                                await FirebaseAuth.instance
+                                    .fetchSignInMethodsForEmail(email);
+
+                            if (signInMethods.contains("password")) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return dialogo(
+                                    textInferior: "Error",
+                                    textoSuperior:
+                                        "Ya existe un usuario con este correo electrónico",
+                                  );
+                                },
+                              );
+                            } else {
+                              await Auth.createUserWithEmailAndPassword(
+                                email: email,
+                                password: password,
+                              );
+
+                              FirebaseFirestore firestore =
+                                  FirebaseFirestore.instance;
+                              await firestore.collection('usuario').add({
+                                'email': email,
+                                // Puedes agregar más campos según tus necesidades
+                              });
+
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return dialogo(
+                                    textInferior: "ya va ",
+                                    textoSuperior: "es el superior????",
+                                  );
+                                },
+                              );
+                            }
+                          } catch (e) {
+                            // Manejar errores, por ejemplo, si hay problemas con la conexión a Internet
+                            print("Error al verificar el usuario: $e");
+                          }
                         }
                       },
                     ),

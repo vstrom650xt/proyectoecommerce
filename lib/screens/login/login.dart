@@ -7,6 +7,7 @@ import 'package:proyectoecommerce/screens/welcome/welcomen.dart';
 import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 const List<String> scopes = <String>[
   'email',
   'https://www.googleapis.com/auth/contacts.readonly',
@@ -146,7 +147,7 @@ class Login extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const home()),
+                                                      const Home()),
                                             )
                                           },
                                           child: const Text('Cerrar'),

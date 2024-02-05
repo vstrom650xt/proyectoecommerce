@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 
-class home extends StatelessWidget {
-  const home({super.key});
-
+class Home extends StatelessWidget {
+  const Home({Key? key});
+////////////////////////////2:03:02
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
-        children: [Padding(padding: EdgeInsets.all(12.0))],
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: TopTitles(subtitle: "12313", title: "E-Commerce"),
+          ),
+          TextFormField(),
+        ],
       ),
     );
   }

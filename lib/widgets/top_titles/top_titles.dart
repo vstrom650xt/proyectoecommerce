@@ -10,8 +10,8 @@ class TopTitles extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Title: $title'),
-        Text('Subtitle: $subtitle'),
+        Text('$title'),
+        Text('$subtitle'),
       ],
     );
   }

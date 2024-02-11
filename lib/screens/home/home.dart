@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:proyectoecommerce/widgets/iconrow/IconRow%20.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
@@ -49,23 +48,22 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TopTitles(subtitle: "Subtitle", title: ""),
                 SizedBox(height: 12),
-                IconRow(icons: icons)
               ],
             ),
           ),
-          SizedBox(height: 12),
-          Padding(
+          const SizedBox(height: 12),
+          const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
               "Mas Vendidos",
@@ -75,7 +73,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           SingleChildScrollView(
             controller: _scrollController,
             scrollDirection: Axis.horizontal,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/widgets/iconrow/IconRow%20.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
-////////////////////////////// 2:23
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -28,12 +29,12 @@ class _HomeState extends State<Home> {
   }
 
   void _startScrolling() {
-    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       if (_scrollController.hasClients) {
         _scrollController
             .animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(seconds: 4),
+          duration: const Duration(seconds: 4),
           curve: Curves.ease,
         )
             .then((_) {
@@ -48,23 +49,23 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TopTitles(subtitle: "", title: "E-Commerce"),
-                TextFormField(
-                  decoration: const InputDecoration(hintText: "Buscar ...."),
-                ),
+                TopTitles(subtitle: "Subtitle", title: ""),
+                SizedBox(height: 12),
+                IconRow(icons: icons)
               ],
             ),
           ),
-          const Padding(
+          SizedBox(height: 12),
+          Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
               "Mas Vendidos",
@@ -74,6 +75,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
+          SizedBox(height: 12),
           SingleChildScrollView(
             controller: _scrollController,
             scrollDirection: Axis.horizontal,
@@ -81,13 +83,6 @@ class _HomeState extends State<Home> {
               children: _buildImageCards(),
             ),
           ),
-          const Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "Categorias",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-          )
         ],
       ),
     );
@@ -99,7 +94,6 @@ class _HomeState extends State<Home> {
       cards.add(
         Card(
           color: Colors.white,
-          //  elevation: 1.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),

@@ -3,3 +3,44 @@ https://www.freepik.es/foto-gratis/ilustracion-inicio-sesion-contrasena-seguros-
 https://www.vectorstock.com/royalty-free-vector/3d-account-login-and-password-form-vector-42722730
 
 https://www.youtube.com/watch?v=nJhiGNfPl54&list=PLPXYFOqINIHuECtKsfKxG5etnR48bIoEa&index=1&t=340s
+
+
+
+usuarios
+  |- uid_usuario_1
+  |     |- nombre: "Nombre del Usuario 1"
+  |     |- email: "correo1@example.com"
+  |     |- ...
+  |
+  |- uid_usuario_2
+        |- nombre: "Nombre del Usuario 2"
+        |- email: "correo2@example.com"
+        |- ...
+Categorías de productos: Puedes tener una colección de categorías donde cada categoría tiene un identificador único y un nombre.
+
+arduino
+Copy code
+categorias
+  |- categoria_1
+  |     |- nombre: "Electrónicos"
+  |
+  |- categoria_2
+        |- nombre: "Ropa"
+Productos: Cada producto debe tener un identificador único, junto con sus detalles como nombre, precio, descripción, URL de la imagen, etc. Puedes almacenar el identificador de la categoría a la que pertenece cada producto para establecer relaciones entre productos y categorías.
+
+arduino
+Copy code
+productos
+  |- producto_1
+  |     |- nombre: "Teléfono móvil"
+  |     |- precio: 500
+  |     |- descripcion: "Descripción del teléfono móvil"
+  |     |- imageUrl: "https://ejemplo.com/imagen.jpg"
+  |     |- categoria_id: "categoria_1"
+  |
+  |- producto_2
+        |- nombre: "Camiseta"
+        |- precio: 20
+        |- descripcion: "Descripción de la camiseta"
+        |- imageUrl: "https://ejemplo.com/imagen2.jpg"
+        |- categoria_id: "categoria_2"

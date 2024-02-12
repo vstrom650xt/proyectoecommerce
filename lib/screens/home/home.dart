@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
@@ -81,6 +80,43 @@ class _HomeState extends State<Home> {
               children: _buildImageCards(),
             ),
           ),
+          const SizedBox(height: 12),
+          const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(
+              "Familias",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: _getCrossAxisCount(context),
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+              ),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: Image.asset(
+                      "lib/img/pc.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -107,5 +143,12 @@ class _HomeState extends State<Home> {
       );
     }
     return cards;
+  }
+
+  int _getCrossAxisCount(BuildContext context) {
+    // Decide the number of items per row based on screen width
+    double screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = (screenWidth / 200).floor(); // Width of each item is 200
+    return crossAxisCount;
   }
 }

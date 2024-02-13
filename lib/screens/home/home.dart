@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
@@ -65,7 +66,7 @@ class _HomeState extends State<Home> {
           const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
-              "Mas Vendidos",
+              "familias",
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -76,15 +77,13 @@ class _HomeState extends State<Home> {
           SingleChildScrollView(
             controller: _scrollController,
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _buildImageCards(),
-            ),
+            child: _buildCategoryImages(),
           ),
           const SizedBox(height: 12),
           const Padding(
             padding: EdgeInsets.all(12.0),
             child: Text(
-              "Familias",
+              "Mas vendidos",
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -98,22 +97,11 @@ class _HomeState extends State<Home> {
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),
-              itemCount: 10,
+              itemCount:
+                  10, // Ajusta esto al número de categorías en tu base de datos Firebase
               itemBuilder: (context, index) {
-                return Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: Image.asset(
-                      "lib/img/pc.png",
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                );
+                // Construye cada imagen de la categoría aquí
+                return _buildCategoryItem(index);
               },
             ),
           ),
@@ -122,33 +110,58 @@ class _HomeState extends State<Home> {
     );
   }
 
-  List<Widget> _buildImageCards() {
-    List<Widget> cards = [];
-    for (int i = 0; i < 10; i++) {
-      cards.add(
-        Card(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: SizedBox(
-            height: 200,
-            width: 200,
-            child: Image.asset(
-              "lib/img/pc.png",
-              fit: BoxFit.fill,
-            ),
-          ),
+  Widget _buildCategoryImages() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('categorias').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final List<DocumentSnapshot> categories = snapshot.data!.docs;
+
+        return Row(
+          children: categories.map((category) {
+            final imageUrl = category[
+                'url']; // Supongo que el nombre del campo es 'imageUrl'
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.network(
+                imageUrl,
+                width: 100,
+                height: 100,
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildCategoryItem(int index) {
+    return Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: SizedBox(
+        height: 200,
+        width: 200,
+        child: Image.asset(
+          "lib/img/pc.png", 
+          fit: BoxFit.fill,
         ),
-      );
-    }
-    return cards;
+      ),
+    );
   }
 
   int _getCrossAxisCount(BuildContext context) {
     // Decide the number of items per row based on screen width
     double screenWidth = MediaQuery.of(context).size.width;
-    int crossAxisCount = (screenWidth / 200).floor(); // Width of each item is 200
+    int crossAxisCount =
+        (screenWidth / 200).floor(); // Width of each item is 200
     return crossAxisCount;
   }
 }

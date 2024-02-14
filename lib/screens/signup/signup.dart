@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:proyectoecommerce/screens/welcome/welcomen.dart';
 import 'package:proyectoecommerce/widgets/botones/botonEstilo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proyectoecommerce/auth.dart';
 import 'package:proyectoecommerce/widgets/show_dialog/dialogo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/screens/home/home.dart';
 
 class Signup extends StatelessWidget {
   const Signup({Key? key});
@@ -107,7 +107,7 @@ class Signup extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return dialogo(
+                              return const dialogo(
                                 textoSuperior: "Error",
                                 textInferior:
                                     "La contraseña debe tener al menos 6 caracteres",
@@ -116,15 +116,15 @@ class Signup extends StatelessWidget {
                           );
                         } else {
                           try {
-                            List<String> signInMethods =
-                                await FirebaseAuth.instance
-                                    .fetchSignInMethodsForEmail(email);
+                            List<String> signInMethods = await FirebaseAuth
+                                .instance
+                                .fetchSignInMethodsForEmail(email);
 
                             if (signInMethods.contains("password")) {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return dialogo(
+                                  return const dialogo(
                                     textInferior: "Error",
                                     textoSuperior:
                                         "Ya existe un usuario con este correo electrónico",
@@ -147,7 +147,7 @@ class Signup extends StatelessWidget {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return dialogo(
+                                  return const dialogo(
                                     textInferior: "ya va ",
                                     textoSuperior: "es el superior????",
                                   );
@@ -170,7 +170,7 @@ class Signup extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const welcomen(),
+                            builder: (context) => const Home(),
                           ),
                         )
                       },

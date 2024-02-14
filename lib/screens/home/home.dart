@@ -52,8 +52,8 @@ class _HomeState extends State<Home> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(12.0),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,8 +63,8 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(height: 12),
-          const Padding(
-            padding: EdgeInsets.all(12.0),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Text(
               "familias",
               style: TextStyle(
@@ -80,8 +80,8 @@ class _HomeState extends State<Home> {
             child: _buildCategoryImages(),
           ),
           const SizedBox(height: 12),
-          const Padding(
-            padding: EdgeInsets.all(12.0),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
             child: Text(
               "Mas vendidos",
               style: TextStyle(
@@ -150,7 +150,7 @@ class _HomeState extends State<Home> {
         height: 200,
         width: 200,
         child: Image.asset(
-          "lib/img/pc.png", 
+          "lib/img/pc.png",
           fit: BoxFit.fill,
         ),
       ),

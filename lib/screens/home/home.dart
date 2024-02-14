@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/widgets/carrousel/carrousel.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
@@ -13,7 +14,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ScrollController _scrollController = ScrollController();
   late Timer _timer;
-
+  final List<String> images = [
+    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
+    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
+    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
+  ];
   @override
   void initState() {
     super.initState();
@@ -80,6 +85,10 @@ class _HomeState extends State<Home> {
             child: _buildCategoryImages(),
           ),
           const SizedBox(height: 12),
+
+          ResponsiveCarousel(
+              imageUrls: images), // Aquí utilizas el widget ResponsiveCarousel
+          const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Text(
@@ -124,8 +133,7 @@ class _HomeState extends State<Home> {
 
         return Row(
           children: categories.map((category) {
-            final imageUrl = category[
-                'url']; // Supongo que el nombre del campo es 'imageUrl'
+            final imageUrl = category['url'];
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(

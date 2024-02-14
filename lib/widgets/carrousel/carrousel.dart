@@ -10,22 +10,29 @@ class ResponsiveCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    return SizedBox(
-      height: screenWidth * 0.6, // Altura del carrusel
-      child: PageView.builder(
-        itemCount: imageUrls.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image.network(
-                imageUrls[index],
-                fit: BoxFit.cover,
-              ),
-            ),
-          );
-        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: Center(
+        child: SizedBox(
+          height: screenWidth *
+              0.158, // Altura del carrusel ajustada al 40% del ancho de la pantalla
+          child: PageView.builder(
+            itemCount: imageUrls.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 5, vertical: 5), ////////////
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.network(
+                    imageUrls[index],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -34,9 +41,8 @@ class ResponsiveCarousel extends StatelessWidget {
 // Ejemplo de uso:
 class MyHomePage extends StatelessWidget {
   final List<String> images = [
-    'https://via.placeholder.com/600x400',
-    'https://via.placeholder.com/600x400',
-    'https://via.placeholder.com/600x400',
+    'https://github.com/vstrom650xt/imagenesFlutter/blob/main/productos/pantallas/pantalla1.png',
+    'https://github.com/vstrom650xt/imagenesFlutter/blob/main/productos/pantallas/pantalla1.png',
   ];
 
   @override

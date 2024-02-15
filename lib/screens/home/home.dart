@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
+import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -54,27 +56,29 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  "familias",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+                const TopTitles(subtitle: "", title: ""),
+                const Padding(
+                  padding: EdgeInsets.only(top: 36.0),
+                  child: Text(
+                    "familias",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                SizedBox(height: 1),
                 SingleChildScrollView(
                   controller: _scrollController,
                   scrollDirection: Axis.horizontal,
                   child: _buildCategoryImages(),
                 ),
-                SizedBox(height: 12),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
+          const Padding(
+            padding: EdgeInsets.all(12.0),
             child: Text(
               "Mas vendidos",
               style: TextStyle(
@@ -96,7 +100,7 @@ class _HomeState extends State<Home> {
       stream: FirebaseFirestore.instance.collection('categorias').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -128,7 +132,7 @@ class _HomeState extends State<Home> {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

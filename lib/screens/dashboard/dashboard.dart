@@ -1,158 +1,187 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
-
-  @override
-  _DashboardPageState createState() => _DashboardPageState();
-}
-
-class _DashboardPageState extends State<DashboardPage> {
-  final _categoryNameController = TextEditingController();
-  final _categoryUrlController = TextEditingController();
-  final _productNameController = TextEditingController();
-  final _productDescriptionController = TextEditingController();
-  final _productBrandController = TextEditingController();
-  final _productPriceController = TextEditingController();
-  final _productUrlController = TextEditingController();
-
-  @override
-  void dispose() {
-    _categoryNameController.dispose();
-    _categoryUrlController.dispose();
-    _productNameController.dispose();
-    _productDescriptionController.dispose();
-    _productBrandController.dispose();
-    _productPriceController.dispose();
-    _productUrlController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _addCategory() async {
-    String name = _categoryNameController.text;
-    String url = _categoryUrlController.text;
-
-    await FirebaseFirestore.instance.collection('categorias').add({
-      'nombre': name,
-      'url': url,
-    });
-
-    _categoryNameController.clear();
-    _categoryUrlController.clear();
-  }
-
-  Future<void> _addProduct() async {
-    String categoryId = ''; // Obtén el ID de la categoría
-    String description = _productDescriptionController.text;
-    String brand = _productBrandController.text;
-    bool masVendido = false; // Cambia esto según sea necesario
-    String name = _productNameController.text;
-    double price = double.parse(_productPriceController.text);
-    String url = _productUrlController.text;
-
-    await FirebaseFirestore.instance.collection('productos').add({
-      'categoria': categoryId,
-      'descripcion': description,
-      'marca': brand,
-      'masVendido': masVendido,
-      'nombre': name,
-      'precio': price,
-      'url': url,
-    });
-
-    _productNameController.clear();
-    _productDescriptionController.clear();
-    _productBrandController.clear();
-    _productPriceController.clear();
-    _productUrlController.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text('Dashboard'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              elevation: 4,
-              margin: EdgeInsets.all(8),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Agregar Categoría',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: _categoryNameController,
-                      decoration: InputDecoration(labelText: 'Nombre'),
-                    ),
-                    TextFormField(
-                      controller: _categoryUrlController,
-                      decoration: InputDecoration(labelText: 'URL'),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _addCategory,
-                      child: Text('Agregar Categoría'),
-                    ),
-                  ],
-                ),
-              ),
+            const AddCategoryCard(),
+            const SizedBox(height: 16),
+            const AddProductCard(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddCategoryCard extends StatelessWidget {
+  const AddCategoryCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController categoryNameController =
+        TextEditingController();
+    final TextEditingController categoryUrlController =
+        TextEditingController();
+
+    void addCategory() async {
+      String name = categoryNameController.text;
+      String url = categoryUrlController.text;
+
+      await FirebaseFirestore.instance.collection('categorias').add({
+        'nombre': name,
+        'url': url,
+      });
+
+      categoryNameController.clear();
+      categoryUrlController.clear();
+    }
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Agregar Categoría',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Card(
-              elevation: 4,
-              margin: EdgeInsets.all(8),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Agregar Producto',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20),
-                    TextFormField(
-                      controller: _productNameController,
-                      decoration: InputDecoration(labelText: 'Nombre'),
-                    ),
-                    TextFormField(
-                      controller: _productDescriptionController,
-                      decoration: InputDecoration(labelText: 'Descripción'),
-                    ),
-                    TextFormField(
-                      controller: _productBrandController,
-                      decoration: InputDecoration(labelText: 'Marca'),
-                    ),
-                    TextFormField(
-                      controller: _productPriceController,
-                      decoration: InputDecoration(labelText: 'Precio'),
-                      keyboardType: TextInputType.number,
-                    ),
-                    TextFormField(
-                      controller: _productUrlController,
-                      decoration: InputDecoration(labelText: 'URL'),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _addProduct,
-                      child: Text('Agregar Producto'),
-                    ),
-                  ],
-                ),
-              ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: categoryNameController,
+              decoration: const InputDecoration(labelText: 'Nombre'),
+            ),
+            TextFormField(
+              controller: categoryUrlController,
+              decoration: const InputDecoration(labelText: 'URL'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: addCategory,
+              child: const Text('Agregar Categoría'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddProductCard extends StatelessWidget {
+  const AddProductCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController productNameController =
+        TextEditingController();
+    final TextEditingController productDescriptionController =
+        TextEditingController();
+    final TextEditingController productBrandController =
+        TextEditingController();
+    final TextEditingController productPriceController =
+        TextEditingController();
+    final TextEditingController productUrlController =
+        TextEditingController();
+    final TextEditingController productCategoryController =
+        TextEditingController();
+    final TextEditingController productMostSaleController =
+        TextEditingController();
+
+    void addProduct() async {
+      String categoryId = ''; // Obtén el ID de la categoría
+      String description = productDescriptionController.text;
+      String brand = productBrandController.text;
+      bool mostSale = productMostSaleController.text.toLowerCase() == 'true';
+      String name = productNameController.text;
+      double price = double.parse(productPriceController.text);
+      String url = productUrlController.text;
+      String category = productCategoryController.text.toLowerCase();
+
+      // Obtener el ID autoincremental
+      final QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('productos').get();
+      final int nextID = querySnapshot.size + 1;
+      
+      await FirebaseFirestore.instance.collection('productos').add({
+        'id': nextID.toString(),
+        'descripcion': description,
+        'marca': brand,
+        'masVendido': mostSale,
+        'nombre': name,
+        'precio': price,
+        'categoria': category,
+        'url': url,
+      });
+
+      productNameController.clear();
+      productDescriptionController.clear();
+      productBrandController.clear();
+      productPriceController.clear();
+      productUrlController.clear();
+      productCategoryController.clear();
+      productMostSaleController.clear();
+    }
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Agregar Producto',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            TextFormField(
+              controller: productNameController,
+              decoration: const InputDecoration(labelText: 'Nombre'),
+            ),
+            TextFormField(
+              controller: productDescriptionController,
+              decoration: const InputDecoration(labelText: 'Descripción'),
+            ),
+            TextFormField(
+              controller: productBrandController,
+              decoration: const InputDecoration(labelText: 'Marca'),
+            ),
+            TextFormField(
+              controller: productPriceController,
+              decoration: const InputDecoration(labelText: 'Precio'),
+              keyboardType: TextInputType.number,
+            ),
+            TextFormField(
+              controller: productUrlController,
+              decoration: const InputDecoration(labelText: 'URL'),
+            ),
+            TextFormField(
+              controller: productCategoryController,
+              decoration: const InputDecoration(labelText: 'Categoria'),
+            ),
+            TextFormField(
+              controller: productMostSaleController,
+              decoration: const InputDecoration(
+                  labelText: '¿Más vendido? (true/false)'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: addProduct,
+              child: const Text('Agregar Producto'),
             ),
           ],
         ),

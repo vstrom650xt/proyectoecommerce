@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectoecommerce/firebase_options.dart';
 import 'package:proyectoecommerce/screens/dashboard/dashboard.dart';
 import 'package:proyectoecommerce/screens/home/home.dart';
+import 'package:proyectoecommerce/screens/producto/product.dart';
 import 'package:proyectoecommerce/screens/welcome/welcomen.dart';
 
 void main() async {
@@ -25,6 +26,6 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: DashboardPage());
+        home: product());
   }
 }

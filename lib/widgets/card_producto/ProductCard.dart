@@ -19,42 +19,47 @@ class ProductCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              height: 150.0,
-              width: double.infinity,
+      child: SizedBox(
+        width: 500.0,
+        height: 500.0, // Ajusta la altura del Card aquí
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(15.0)),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                height: 300.0,
+                width: 300,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  nombre,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    nombre,
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 4.0),
-                Text(
-                  '\$$precio',
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.grey[700],
+                  const SizedBox(height: 4.0),
+                  Text(
+                    '$precio\€',
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey[700],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

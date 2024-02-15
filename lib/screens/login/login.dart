@@ -141,6 +141,7 @@ class Login extends StatelessWidget {
                                 );
                               } else {
                                 // El inicio de sesión falló
+                                // ignore: use_build_context_synchronously
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {

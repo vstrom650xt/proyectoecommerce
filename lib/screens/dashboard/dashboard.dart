@@ -79,53 +79,80 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Agregar Categoría',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Card(
+              elevation: 4,
+              margin: EdgeInsets.all(8),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Agregar Categoría',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _categoryNameController,
+                      decoration: InputDecoration(labelText: 'Nombre'),
+                    ),
+                    TextFormField(
+                      controller: _categoryUrlController,
+                      decoration: InputDecoration(labelText: 'URL'),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _addCategory,
+                      child: Text('Agregar Categoría'),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            TextFormField(
-              controller: _categoryNameController,
-              decoration: InputDecoration(labelText: 'Nombre'),
-            ),
-            TextFormField(
-              controller: _categoryUrlController,
-              decoration: InputDecoration(labelText: 'URL'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _addCategory,
-              child: Text('Agregar Categoría'),
-            ),
-            SizedBox(height: 40),
-            Text(
-              'Agregar Producto',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            TextFormField(
-              controller: _productNameController,
-              decoration: InputDecoration(labelText: 'Nombre'),
-            ),
-            TextFormField(
-              controller: _productDescriptionController,
-              decoration: InputDecoration(labelText: 'Descripción'),
-            ),
-            TextFormField(
-              controller: _productBrandController,
-              decoration: InputDecoration(labelText: 'Marca'),
-            ),
-            TextFormField(
-              controller: _productPriceController,
-              decoration: InputDecoration(labelText: 'Precio'),
-              keyboardType: TextInputType.number,
-            ),
-            TextFormField(
-              controller: _productUrlController,
-              decoration: InputDecoration(labelText: 'URL'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _addProduct,
-              child: Text('Agregar Producto'),
+            Card(
+              elevation: 4,
+              margin: EdgeInsets.all(8),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Agregar Producto',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _productNameController,
+                      decoration: InputDecoration(labelText: 'Nombre'),
+                    ),
+                    TextFormField(
+                      controller: _productDescriptionController,
+                      decoration: InputDecoration(labelText: 'Descripción'),
+                    ),
+                    TextFormField(
+                      controller: _productBrandController,
+                      decoration: InputDecoration(labelText: 'Marca'),
+                    ),
+                    TextFormField(
+                      controller: _productPriceController,
+                      decoration: InputDecoration(labelText: 'Precio'),
+                      keyboardType: TextInputType.number,
+                    ),
+                    TextFormField(
+                      controller: _productUrlController,
+                      decoration: InputDecoration(labelText: 'URL'),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _addProduct,
+                      child: Text('Agregar Producto'),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

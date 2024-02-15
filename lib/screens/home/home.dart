@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/screens/producto/product.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 
 class Home extends StatefulWidget {
@@ -110,12 +111,23 @@ class _HomeState extends State<Home> {
         return Row(
           children: categories.map((category) {
             final imageUrl = category['url'] as String;
+            final productId = category.id; // Obtener el ID del producto
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.network(
-                imageUrl,
-                width: 150,
-                height: 150,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Product(productId: productId),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  imageUrl,
+                  width: 150,
+                  height: 150,
+                ),
               ),
             );
           }).toList(),
@@ -147,7 +159,18 @@ class _HomeState extends State<Home> {
           ),
           itemCount: products.length,
           itemBuilder: (context, index) {
-            return _buildProductItem(products[index]);
+            return GestureDetector(
+              onTap: () {
+                final productId = products[index].id;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Product(productId: productId),
+                  ),
+                );
+              },
+              child: _buildProductItem(products[index]),
+            );
           },
         );
       },
@@ -181,3 +204,5 @@ class _HomeState extends State<Home> {
     return crossAxisCount;
   }
 }
+
+

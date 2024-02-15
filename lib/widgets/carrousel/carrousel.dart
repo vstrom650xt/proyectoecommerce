@@ -24,35 +24,15 @@ class ResponsiveCarousel extends StatelessWidget {
                     horizontal: 5, vertical: 5), ////////////
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrls[index],
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               );
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-// Ejemplo de uso:
-class MyHomePage extends StatelessWidget {
-  final List<String> images = [
-    'https://github.com/vstrom650xt/imagenesFlutter/blob/main/productos/pantallas/pantalla1.png',
-    'https://github.com/vstrom650xt/imagenesFlutter/blob/main/productos/pantallas/pantalla1.png',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Responsive Carousel'),
-      ),
-      body: Center(
-        child: ResponsiveCarousel(imageUrls: images),
       ),
     );
   }

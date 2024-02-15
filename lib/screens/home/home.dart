@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:proyectoecommerce/widgets/carrousel/carrousel.dart';
-import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 import 'dart:async';
 
 class Home extends StatefulWidget {
@@ -14,11 +12,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ScrollController _scrollController = ScrollController();
   late Timer _timer;
-  final List<String> images = [
-    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
-    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
-    'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
-  ];
+
   @override
   void initState() {
     super.initState();
@@ -62,33 +56,23 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TopTitles(subtitle: "Subtitle", title: ""),
+                const Text(
+                  "familias",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 1),
+                SingleChildScrollView(
+                  controller: _scrollController,
+                  scrollDirection: Axis.horizontal,
+                  child: _buildCategoryImages(),
+                ),
                 SizedBox(height: 12),
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(
-              "familias",
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          SingleChildScrollView(
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            child: _buildCategoryImages(),
-          ),
-          const SizedBox(height: 12),
-
-          ResponsiveCarousel(
-              imageUrls: images), // Aquí utilizas el widget ResponsiveCarousel
-          const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Text(
@@ -100,19 +84,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: _getCrossAxisCount(context),
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
-              itemCount:
-                  10, // Ajusta esto al número de categorías en tu base de datos Firebase
-              itemBuilder: (context, index) {
-                // Construye cada imagen de la categoría aquí
-                return _buildCategoryItem(index);
-              },
-            ),
+            child: _buildMasVendidosList(),
           ),
         ],
       ),
@@ -133,13 +105,13 @@ class _HomeState extends State<Home> {
 
         return Row(
           children: categories.map((category) {
-            final imageUrl = category['url'];
+            final imageUrl = category['url'] as String;
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(
                 imageUrl,
-                width: 100,
-                height: 100,
+                width: 150,
+                height: 150,
               ),
             );
           }).toList(),
@@ -148,7 +120,39 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildCategoryItem(int index) {
+  Widget _buildMasVendidosList() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('productos')
+          .where('masVendido', isEqualTo: true)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final List<DocumentSnapshot> products = snapshot.data!.docs;
+
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: _getCrossAxisCount(context),
+            crossAxisSpacing: 8,
+            mainAxisSpacing: 8,
+          ),
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            return _buildProductItem(products[index]);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildProductItem(DocumentSnapshot productSnapshot) {
+    final productData = productSnapshot.data() as Map<String, dynamic>;
+    final productImageUrl = productData['url'] as String;
     return Card(
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -157,8 +161,8 @@ class _HomeState extends State<Home> {
       child: SizedBox(
         height: 200,
         width: 200,
-        child: Image.asset(
-          "lib/img/pc.png",
+        child: Image.network(
+          productImageUrl,
           fit: BoxFit.fill,
         ),
       ),

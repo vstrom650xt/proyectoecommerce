@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 
-class Product extends StatelessWidget {
+class Product extends StatefulWidget {
   final String productId;
 
   const Product({Key? key, required this.productId}) : super(key: key);
+
+  @override
+  _ProductState createState() => _ProductState();
+}
+
+class _ProductState extends State<Product> {
+  int _quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +47,7 @@ class Product extends StatelessWidget {
                             StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('productos')
-                                  .doc(productId)
+                                  .doc(widget.productId)
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData) {
@@ -61,7 +68,7 @@ class Product extends StatelessWidget {
                                     productData['descripcion'] as String;
 
                                 return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(15),
@@ -99,9 +106,40 @@ class Product extends StatelessWidget {
                                       style: const TextStyle(fontSize: 18.0),
                                     ),
                                     const SizedBox(height: 20),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            if (_quantity > 1) {
+                                              setState(() {
+                                                _quantity--;
+                                              });
+                                            }
+                                          },
+                                          icon: Icon(Icons.remove),
+                                        ),
+                                        Text(
+                                          '$_quantity',
+                                          style: TextStyle(fontSize: 18.0),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _quantity++;
+                                            });
+                                          },
+                                          icon: Icon(Icons.add),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
                                     ElevatedButton(
                                       onPressed: () {
                                         // Add action here
+                                        print(
+                                            'Add to Cart: Product ID - ${widget.productId}, Quantity - $_quantity');
                                       },
                                       child: const Text('Add to Cart'),
                                     ),

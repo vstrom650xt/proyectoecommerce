@@ -31,7 +31,7 @@ class BotonEstilo extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.white,
-          fixedSize: Size(screenWidth * 0.3, screenHeight * 0.06),
+          fixedSize: Size(screenWidth * 0.4, screenHeight * 0.06),
         ),
         child: Text(
           text,

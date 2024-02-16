@@ -13,8 +13,6 @@ const List<String> scopes = <String>[
 ];
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: 'your-client_id.apps.googleusercontent.com',
   scopes: scopes,
 );
 
@@ -27,7 +25,7 @@ class Login extends StatelessWidget {
     String password = '';
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    double googleImageSize = screenHeight * 0.1;
+    double googleImageSize = screenHeight * 0.08;
     ValueNotifier userCredential = ValueNotifier('');
 
     final size = MediaQuery.of(context).size;
@@ -86,7 +84,7 @@ class Login extends StatelessWidget {
                       child: Icon(
                         Icons.facebook,
                         color: Colors.blue,
-                        size: screenHeight * 0.1,
+                        size: screenHeight * 0.08,
                       ),
                     ),
                     SizedBox(

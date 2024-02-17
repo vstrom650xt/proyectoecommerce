@@ -18,11 +18,8 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Details'),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: TopTitles(subtitle: "", title: ""),
-        ),
+        // Agregar un appbar para colocar TopTitles arriba
+        title: TopTitles(subtitle: "", title: ""),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -31,7 +28,7 @@ class _ProductState extends State<Product> {
             child: Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(
-                  maxWidth: 600, // Tamaño máximo en PC
+                  maxWidth: 500, // Tamaño máximo en PC
                 ),
                 child: Card(
                   elevation: 4,
@@ -76,7 +73,7 @@ class _ProductState extends State<Product> {
                                         productImageUrl,
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        height: 300,
+                                        height: 180,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -84,7 +81,7 @@ class _ProductState extends State<Product> {
                                     Text(
                                       productName,
                                       style: const TextStyle(
-                                          fontSize: 28.0,
+                                          fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     const SizedBox(height: 10),
@@ -93,7 +90,7 @@ class _ProductState extends State<Product> {
                                       style: const TextStyle(
                                           fontSize: 20.0, color: Colors.grey),
                                     ),
-                                    const SizedBox(height: 20),
+                                    const SizedBox(height: 0),
                                     const Text(
                                       'Description:',
                                       style: TextStyle(

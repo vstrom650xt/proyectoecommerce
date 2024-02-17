@@ -116,6 +116,7 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
+                  print(productId);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -204,5 +205,3 @@ class _HomeState extends State<Home> {
     return crossAxisCount;
   }
 }
-
-

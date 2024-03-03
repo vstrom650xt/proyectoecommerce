@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/screens/categorias/categorias.dart';
 import 'package:proyectoecommerce/screens/producto/product.dart';
 import 'package:proyectoecommerce/widgets/top_titles/top_titles.dart';
 
@@ -111,7 +112,7 @@ class _HomeState extends State<Home> {
         return Row(
           children: categories.map((category) {
             final imageUrl = category['url'] as String;
-            final productId = category.id; // Obtener el ID del producto
+            final productId = category.id;
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
@@ -120,7 +121,7 @@ class _HomeState extends State<Home> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Product(productId: productId),
+                      builder: (context) => Categorias(categoriaId: productId),
                     ),
                   );
                 },

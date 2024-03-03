@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyectoecommerce/screens/carrito/carrito.dart';
 import 'package:proyectoecommerce/screens/login/login.dart';
 import 'package:proyectoecommerce/screens/signup/signup.dart';
 import 'package:proyectoecommerce/screens/profile/profile.dart';
@@ -129,7 +130,12 @@ class _TopTitlesState extends State<TopTitles> {
 
                       break;
                     case 1:
-                      // Lógica para Carrito
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => carrito()
+                        ),
+                      );
                       break;
                     case 2:
                       // Lógica para Categorías

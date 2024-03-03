@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:proyectoecommerce/screens/producto/product.dart'; // Asegúrate de importar correctamente el widget Product
 
 class Categorias extends StatelessWidget {
   final String categoriaId;
@@ -33,16 +34,20 @@ class Categorias extends StatelessWidget {
                 return ListTile(
                   leading: Image.network(
                     producto['url'],
-                    width:
-                        50, // Ajusta el tamaño de la imagen según sea necesario
+                    width: 50,
                     height: 50,
-                    fit: BoxFit
-                        .cover, // Ajusta la forma en que la imagen se ajusta al widget
+                    fit: BoxFit.cover,
                   ),
                   title: Text(producto['nombre']),
                   subtitle: Text('Precio: \$${producto['precio']}'),
                   onTap: () {
-                    // Aquí puedes agregar la navegación para ver detalles del producto
+                    final productId = producto.id;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Product(productId: productId),
+                      ),
+                    );
                   },
                 );
               },

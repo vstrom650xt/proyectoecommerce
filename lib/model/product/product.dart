@@ -16,7 +16,7 @@ class product {
     required this.descripcion,
     required this.esMasVendido,
     required this.status,
-    required this.marca,
+    required this.marca, required String productId,
   });
 
   factory product.fromJson(Map<String, dynamic> json) {

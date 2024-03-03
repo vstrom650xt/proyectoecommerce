@@ -137,8 +137,10 @@ class _ProductState extends State<Product> {
                                         // Add action here
                                         print(
                                             'Add to Cart: Product ID - ${widget.productId}, Quantity - $_quantity');
+                                            
                                       },
                                       child: const Text('Add to Cart'),
+                                      
                                     ),
                                   ],
                                 );

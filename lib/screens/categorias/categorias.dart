@@ -34,8 +34,8 @@ class Categorias extends StatelessWidget {
                 return ListTile(
                   leading: Image.network(
                     producto['url'],
-                    width: 50,
-                    height: 50,
+                    width: 150,
+                    height: 150,
                     fit: BoxFit.cover,
                   ),
                   title: Text(producto['nombre']),

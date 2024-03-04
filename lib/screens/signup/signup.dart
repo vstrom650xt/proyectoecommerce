@@ -24,7 +24,7 @@ class Signup extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "lib/img/login.png",
+              "lib/img/singup.png",
               height: screenHeight * 0.4,
               width: screenWidth * 0.4,
             ),
@@ -141,21 +141,19 @@ class Signup extends StatelessWidget {
                                   FirebaseFirestore.instance;
                               await firestore.collection('usuario').add({
                                 'email': email,
-                                // Puedes agregar más campos según tus necesidades
                               });
 
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
                                   return const dialogo(
-                                    textInferior: "ya va ",
-                                    textoSuperior: "es el superior????",
+                                    textInferior: "",
+                                    textoSuperior: "Registrado correctamente",
                                   );
                                 },
                               );
                             }
                           } catch (e) {
-                            // Manejar errores, por ejemplo, si hay problemas con la conexión a Internet
                             print("Error al verificar el usuario: $e");
                           }
                         }
